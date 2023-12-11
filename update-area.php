@@ -18,6 +18,15 @@
         $query=mysqli_query($con, "UPDATE parkarea set areaCode='$areaCode', areaDesc='$areaDesc', areaSlots='$areaSlot' where areaid='$eid'");
         if ($query) {
             $msg="Park Area has been updated.";
+            for ($i = $eid; $i <= $areaSlot; $i++) {
+                $slotid = 'SLOT' . str_pad($i, 3, '0', STR_PAD_LEFT); // Generates slotid like SLOT001, SLOT002, ..., SLOT010
+            
+                // SQL query to delete a row from the slotinfo table
+                $query = "DELETE FROM slotinfo WHERE slotid='$slotid' AND areaName='$areaCode'";
+            
+                // Execute the query
+                $result = mysqli_query($con, $query);
+            }
         }
         else
             {

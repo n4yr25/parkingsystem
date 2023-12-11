@@ -71,7 +71,30 @@
 						<div class="col-md-12">
 
 							<form method="POST">
-
+								<div class="form-group">
+									<label>Area</label>
+									<select class="form-control" name="catename" id="catename">
+									<option value="0">Select Area</option>
+									<?php $query=mysqli_query($con,"select * from parkarea");
+										while($row=mysqli_fetch_array($query))
+										{
+										?>    
+                                    <option value="<?php echo $row['areaCode'];?>"><?php echo $row['areaCode'];?></option>
+                  					<?php } ?> 
+									</select>
+								</div>
+								<div class="form-group">
+									<label>Slot Number</label>
+									<select class="form-control" name="catename" id="catename">
+									<option value="0">Select Slot</option>
+									<?php $query=mysqli_query($con,"select * from slotinfo");
+										while($row=mysqli_fetch_array($query))
+										{
+										?>    
+                                    <option value="<?php echo $row['areaCode'];?>"><?php echo $row['areaCode'];?></option>
+                  					<?php } ?> 
+									</select>
+								</div>
 								<div class="form-group">
 									<label>Registration Number</label>
 									<input type="text" class="form-control" placeholder="LOL-1869" id="vehreno" name="vehreno" required>

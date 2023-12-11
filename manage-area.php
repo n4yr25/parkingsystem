@@ -6,19 +6,31 @@
 	header('location:logout.php');
 	} else {
 
-	if(isset($_POST['submit-vehicle'])) {
-		$areaCode=$_POST['areaCode'];
-		$areaDesc=$_POST['areaDesc'];
-		$areaSlot=$_POST['numSlot'];
-			
-		$query=mysqli_query($con, "INSERT into parkarea(areaCode,areaDesc,areaSlots) value('$areaCode','$areaDesc','$areaSlot')");
-		if ($query) {
-			echo "<script>alert('Park Area has been added!');</script>";
-			echo "<script>window.location.href ='manage-area.php'</script>";
-		} else {
-			echo "<script>alert('Something Went Wrong');</script>";       
-		}
-	}
+        if (isset($_POST['submit-vehicle'])) {
+            $areaCode = $_POST['areaCode'];
+            $areaDesc = $_POST['areaDesc'];
+            $areaSlot = $_POST['numSlot'];
+        
+            $query = mysqli_query($con, "INSERT INTO parkarea(areaCode, areaDesc, areaSlots) VALUES ('$areaCode', '$areaDesc', '$areaSlot')");
+            if ($query) {
+                echo "<script>alert('Park Area has been added!');</script>";
+        
+                for ($i = 1; $i <= $areaSlot; $i++) {
+                    $slotid = 'SLOT' . str_pad($i, 3, '0', STR_PAD_LEFT); // Generates slotid like SLOT001, SLOT002, ..., SLOT010
+        
+                    // SQL query to insert a row into the slotinfo table
+                    $query = "INSERT INTO slotinfo (slotid, areaName) VALUES ('$slotid', '$areaCode')";
+        
+                    // Execute the query
+                    $result = mysqli_query($con, $query);
+        
+                  
+                }
+            } else {
+                echo "<script>alert('Something Went Wrong');</script>";
+            }
+        }
+        
   ?>
 
 <!DOCTYPE html>

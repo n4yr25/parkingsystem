@@ -151,7 +151,11 @@ if (strlen($_SESSION['vpmsaid']==0)) {
 			<div class="col-xs-6 col-md-3 col-lg-3 no-padding">
 				<div class="panel panel-orange panel-widget border-right">
 					<div class="row no-padding">
-						<div class="large"><img src="assets/icons/car_res.png" alt="" style="height: 140px; width: auto;"></div>
+						<div class="large">
+							<a href="manage-vehicles.php">
+								<img src="assets/icons/car_res.png" alt="" style="height: 140px; width: auto;">
+							</a>
+						</div>
 						<div class="text-muted">Slot 1</div>
 					</div>
 				</div>
