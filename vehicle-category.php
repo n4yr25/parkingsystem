@@ -18,6 +18,7 @@
     <link href="css/datatable.css" rel="stylesheet">
 	<link href="css/datepicker3.css" rel="stylesheet">
 	<link href="css/styles.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	
 	<!--Custom Font-->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -80,30 +81,41 @@
             <td><?php  echo $row['CreationDate'];?></td>
             
             <td><a href="update-category.php?editid=<?php echo $row['ID'];?>"> <button class="btn btn-success btn-sm"><i class="fa fa-edit"></i></button> </a>
-            <a href="remove-category.php?editid=<?php echo $row['ID'];?>"> <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> </a>
-            </td>
+			<button class="btn btn-danger btn-sm" onclick="confirmDelete(<?php echo $row['ID']; ?>)">
+				<i class="fa fa-trash"></i>
+			</button>
+			</td>
 
             </tr>
-
                 <?php $cnt=$cnt+1;}?>
- 
-        
-        </tbody>
+			</tbody>
 
-    </table>
-						</div>
-					</div>
-				</div>
-				
-				
-				
-</div><!--/.row-->
-		
-		
-		
-
-        <?php include 'includes/footer.php'?>
+		</table>
+		</div>
+		</div>
+		</div>	
+	</div><!--/.row-->
 	</div>	<!--/.main-->
+
+	<script>
+	function confirmDelete(categoryId) {
+		Swal.fire({
+			title: 'Are you sure?',
+			text: 'You won\'t be able to revert this!',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				// If the user clicks "Yes," redirect to the remove-category.php page with the category ID
+				window.location.href = 'remove-category.php?editid=' + categoryId;
+			}
+		});
+	}
+	</script>
+
 	
 	<script src="js/jquery-1.11.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>

@@ -86,7 +86,7 @@
 
             <td><?php  echo $row['VehicleCategory'];?></td>
 
-            <td><?php  echo 'CA-'.$row['ParkingNumber'];?></td>
+            <td><?php  echo 'CA-'.$row['slotid'];?></td>
 
 			<td><?php  echo '₱'.$row['ParkingCharge'];?></td>
 

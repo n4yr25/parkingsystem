@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 12, 2023 at 05:36 PM
+-- Generation Time: Dec 12, 2023 at 09:20 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -64,8 +64,7 @@ CREATE TABLE `parkarea` (
 --
 
 INSERT INTO `parkarea` (`areaid`, `areaCode`, `areaDesc`, `areaSlots`) VALUES
-(18, 'Park-A', 'All type of vehicle', 10),
-(19, 'Park-B', 'Light Vehicles only', 5);
+(8, 'Park-A', 'All type of vehicle', 10);
 
 -- --------------------------------------------------------
 
@@ -110,17 +109,12 @@ INSERT INTO `slotinfo` (`slotid`, `areaName`, `status`) VALUES
 ('SLOT002', 'Park-A', 'reserved'),
 ('SLOT003', 'Park-A', 'reserved'),
 ('SLOT004', 'Park-A', 'reserved'),
-('SLOT005', 'Park-A', 'reserved'),
+('SLOT005', 'Park-A', 'available'),
 ('SLOT006', 'Park-A', 'reserved'),
-('SLOT007', 'Park-A', 'AVAILABLE'),
-('SLOT008', 'Park-A', 'AVAILABLE'),
-('SLOT009', 'Park-A', 'AVAILABLE'),
-('SLOT010', 'Park-A', 'AVAILABLE'),
-('SLOT001', 'Park-B', 'reserved'),
-('SLOT002', 'Park-B', 'reserved'),
-('SLOT003', 'Park-B', 'reserved'),
-('SLOT004', 'Park-B', 'reserved'),
-('SLOT005', 'Park-B', 'reserved');
+('SLOT007', 'Park-A', 'available'),
+('SLOT008', 'Park-A', 'available'),
+('SLOT009', 'Park-A', 'available'),
+('SLOT010', 'Park-A', 'available');
 
 -- --------------------------------------------------------
 
@@ -167,10 +161,8 @@ CREATE TABLE `vcategory` (
 --
 
 INSERT INTO `vcategory` (`ID`, `VehicleCat`, `shortDescription`, `CreationDate`) VALUES
-(7, 'Bike', 'Light Vehicle with no engine', '2023-12-10 13:32:39'),
-(8, 'E-bike', 'Electric Bicycle', '2023-12-10 13:32:59'),
-(9, 'Motor', 'Light Vehicle with Engine', '2023-12-10 13:33:25'),
-(10, 'Car', 'Vehicle with four wheels', '2023-12-10 13:33:48');
+(3, 'Motor', 'Light Vehicle', '2023-12-12 20:04:28'),
+(4, 'Bike', 'Light Vehicle with no engine', '2023-12-12 20:04:49');
 
 -- --------------------------------------------------------
 
@@ -180,6 +172,7 @@ INSERT INTO `vcategory` (`ID`, `VehicleCat`, `shortDescription`, `CreationDate`)
 
 CREATE TABLE `vehicle_info` (
   `ID` int(10) NOT NULL,
+  `area` varchar(20) NOT NULL,
   `slotid` varchar(120) DEFAULT NULL,
   `VehicleCategory` varchar(120) NOT NULL,
   `VehicleCompanyname` varchar(120) DEFAULT NULL,
@@ -198,46 +191,13 @@ CREATE TABLE `vehicle_info` (
 -- Dumping data for table `vehicle_info`
 --
 
-INSERT INTO `vehicle_info` (`ID`, `slotid`, `VehicleCategory`, `VehicleCompanyname`, `RegistrationNumber`, `OwnerName`, `OwnerContactNumber`, `InTime`, `OutTime`, `ParkingCharge`, `chargeStatus`, `Remark`, `Status`) VALUES
-(1, '96069', 'Four Wheeler', 'Hyundai', 'GGZ-1155', 'Jamie Macon', 8956232528, '2021-03-09 05:58:38', '2021-03-09 10:15:43', '34', '', 'NA', 'Out'),
-(2, '52796', 'Two Wheeler', 'KTM', 'GTM-1069', 'Dan Wilson', 8989898989, '2021-03-09 08:58:38', '2021-03-09 14:16:26', '20', '', 'NA', 'Out'),
-(3, '65023', 'Two Wheeler', 'Yamaha', 'JFF-7888', 'Lynn Roberts\n', 7845123697, '2021-03-09 08:58:38', '2021-03-09 12:16:31', '20', '', 'Vehicle Out', 'Out'),
-(4, '90880', 'Two Wheeler', 'Suzuki', 'PLO-8507', 'Charles Mathew', 2132654447, '2021-03-09 08:58:38', '2021-03-09 13:58:38', '20', '', 'Vehicle Out', 'Out'),
-(5, '09894', 'Two Wheeler', 'Piaggio', 'DLE-7701', 'Theresa Hay\n', 4654654654, '2021-03-09 08:58:38', '2021-03-09 14:58:38', '15', '', 'none', 'Out'),
-(6, '78915', 'Two Wheeler', 'Aprilia', 'GZG-7896', 'Susie Eller', 7978999879, '2021-03-09 08:58:38', NULL, '', '', '', ''),
-(7, '25207', 'Two Wheeler', 'Honda', 'LDC-7019', 'Shannon Pinson\n', 1234567890, '2021-03-09 11:03:05', '2021-03-09 11:58:38', '5', '', 'none', 'Out'),
-(8, '58836', 'Two Wheeler', 'Yamaha', 'FYS-6969', 'Mark Paull', 1234567890, '2021-03-09 11:32:02', '2021-03-09 12:58:38', '5', '', 'Vehicle Out', 'Out'),
-(9, '52207', 'Four Wheeler', 'Ford ', 'CAS-7850', 'Bernice Willilams\n', 7411112000, '2021-03-07 10:42:52', '2021-03-09 11:58:38', '7', '', 'none', 'Out'),
-(10, '47648', 'Four Wheeler', 'Tesla', 'CST-6907', 'Myra Warnke\n', 8541112500, '2021-03-07 14:54:03', NULL, '', '', '', ''),
-(11, '03289', 'Four Wheeler', 'Volkswagen', 'STT-7002', 'Colin Greenwood', 2574442560, '2021-03-08 13:50:15', NULL, '', '', '', ''),
-(12, '62450', 'Two Wheeler', 'KTM', 'ILS-2580', 'Bruno Denn', 1254447850, '2021-03-08 09:34:55', '2021-03-08 15:58:38', '30', '', 'none', 'Out'),
-(13, '28913', 'Four Wheeler', 'Hyundai', 'SSO-8800', 'Tanya Chilton\n', 2570005640, '2021-03-09 13:09:16', NULL, '', '', '', ''),
-(14, '63879', 'Four Wheeler', 'Hyundai', 'GEP-7805', 'Matthew  Foust\n', 6667869500, '2021-07-16 15:28:32', '2021-07-16 17:17:19', '5', '', 'none', 'Out'),
-(15, '37066', 'Four Wheeler', 'Tesla', 'QWE-9602', 'Paul Nicholls', 7412589658, '2021-07-17 16:18:01', '2021-07-17 16:49:40', '5', '', 'none', 'Out'),
-(16, '19803', 'Four Wheeler', 'Renault', 'ABE-3470', 'Alyse Conn', 7896547850, '2021-07-17 16:59:26', '2021-07-17 17:20:22', '2', '', 'none', 'Out'),
-(17, '25088', 'Four Wheeler', 'Volkswagen', 'TRS-8027', 'Bonnie Jackson', 7014741470, '2021-07-17 17:40:22', NULL, '', '', '', ''),
-(18, '37496', 'Four Wheeler', 'Chevrolet', 'VNT-9135', 'Larry Clark', 7890240001, '2021-07-17 17:43:16', NULL, '', '', '', ''),
-(19, '99316', 'Four Wheeler', 'MG', 'PIJ-8802', 'Jessica Garner', 7012560025, '2021-07-17 17:44:07', '2021-07-17 17:45:05', '3', '', 'none.', 'Out'),
-(20, '59268', 'Two Wheeler', 'Kawasaki', 'LLL-8987', 'James', 7014569980, '2021-07-17 17:46:37', NULL, '', '', '', ''),
-(21, '62740', 'Motor', 'Honda', 'ASD 123', 'Ryan King', 900132564, '2023-12-10 13:38:55', NULL, '', '', '', ''),
-(22, '14488', 'Car', 'Toyota', 'ASD 123', 'Ryan King', 900132564, '2023-12-10 13:43:27', NULL, '', '', '', ''),
-(23, '22537', 'Car', 'Toyota', 'ASD 123', 'Ryan King', 900132564, '2023-12-10 13:44:27', NULL, '', '', '', ''),
-(24, '98370', 'Car', 'Honda', 'ASD 123', 'Ryan King', 900132564, '2023-12-10 13:45:37', NULL, '', '', '', ''),
-(25, '75984', 'Bike', 'Honda', 'ASD 123', 'Ryan King', 900132564, '2023-12-10 13:47:09', NULL, '', '', '', ''),
-(26, '69184', 'E-bike', 'Honda', 'ASD 123', 'Ryan King', 900132564, '2023-12-10 13:47:43', NULL, '', '', '', ''),
-(27, '98711', 'Bike', 'Bike', 'ASD-123', 'Ryan King', 900132564, '2023-12-12 13:00:09', NULL, '', '', '', ''),
-(28, 'SLOT001', 'Bike', 'Bike', 'ASD-1234', 'Ryan King', 900132564, '2023-12-12 13:25:46', NULL, '', '', '', ''),
-(29, 'SLOT002', 'Motor', 'Honda', 'QWE123', 'Daniel Padilla', 902020202, '2023-12-12 13:31:39', NULL, '', '', '', ''),
-(30, 'SLOT001', 'Car', 'Mitsubishi', 'QWE123', 'Bea Conag', 900132564, '2023-12-12 13:37:41', NULL, '', '', '', ''),
-(31, 'SLOT001', 'Car', 'Mitsubishi', 'QWE123', 'Bea Conag', 900132564, '2023-12-12 13:37:51', NULL, '', '', '', ''),
-(32, 'SLOT001', 'Car', 'Mitsubishi', 'QWE123', 'Bea Conag', 900132564, '2023-12-12 13:38:18', NULL, '', '', '', ''),
-(33, 'SLOT001', 'Car', 'Mitsubishi', 'QWE123', 'Bea Conag', 900132564, '2023-12-12 13:39:41', NULL, '', '', '', ''),
-(34, 'SLOT003', 'Car', 'Honda', 'ASD-123', 'Kathleen Sison', 902020202, '2023-12-12 15:42:31', NULL, '', '', '', ''),
-(35, 'SLOT002', 'Car', 'Mitsubishi', 'ASD-123', 'Ben Ben', 902020202, '2023-12-12 15:47:08', NULL, '', '', '', ''),
-(36, 'SLOT002', 'Car', 'Mitsubishi', 'ASD-123', 'Ben Ben', 902020202, '2023-12-12 15:49:56', NULL, '', '', '', ''),
-(37, 'SLOT004', 'Motor', 'Honda', 'ASD-123', 'Ryan King', 900132564, '2023-12-12 15:53:21', NULL, '', '', '', ''),
-(38, 'SLOT005', 'Motor', 'Honda', 'ASD-123', 'Ryan King', 900132564, '2023-12-12 15:58:35', '2023-12-12 16:26:33', '25', '', 'okay', 'Out'),
-(39, 'SLOT006', 'E-bike', 'Honda', 'ASD-123', 'Ryan King', 900132564, '2023-12-12 16:18:23', '2023-12-12 16:26:15', '25', '', 'okay', 'Out');
+INSERT INTO `vehicle_info` (`ID`, `area`, `slotid`, `VehicleCategory`, `VehicleCompanyname`, `RegistrationNumber`, `OwnerName`, `OwnerContactNumber`, `InTime`, `OutTime`, `ParkingCharge`, `chargeStatus`, `Remark`, `Status`) VALUES
+(1, 'Park-A', 'SLOT002', 'Motor', 'Honda', 'ASD 123', 'Daniel Padilla', 900132564, '2023-12-12 20:06:05', '2023-12-12 20:06:34', '25', '', 'Okay', 'Out'),
+(2, 'Park-A', 'SLOT006', 'Bike', 'TREK', 'WEB123', 'Daniel Padilla', 900132564, '2023-12-12 20:08:36', NULL, '25', '', '', ''),
+(3, 'Park-A', 'SLOT001', 'Motor', 'Honda', 'ASD 123', 'Ryan King', 900132564, '2023-12-12 20:12:56', NULL, '25', '', '', ''),
+(4, 'Park-A', 'SLOT001', 'Motor', 'Honda', 'ASD 123', 'Ryan King', 900132564, '2023-12-12 20:17:29', NULL, '25', '', '', ''),
+(5, 'Park-A', 'SLOT003', 'Motor', 'Honda', 'ASD 123', 'Ryan King', 900132564, '2023-12-12 20:17:46', NULL, '25', '', '', ''),
+(6, 'Park-A', 'SLOT004', 'Motor', 'Toyota', 'ASD 123', 'Bea Conag', 900132564, '2023-12-12 20:18:44', NULL, '25', '', '', '');
 
 --
 -- Indexes for dumped tables
@@ -299,7 +259,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `parkarea`
 --
 ALTER TABLE `parkarea`
-  MODIFY `areaid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `areaid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -317,13 +277,13 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `vcategory`
 --
 ALTER TABLE `vcategory`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `vehicle_info`
 --
 ALTER TABLE `vehicle_info`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

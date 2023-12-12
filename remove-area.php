@@ -15,7 +15,6 @@ $qry="DELETE from parkarea where areaid='$id'";
 $result=mysqli_query($con,$qry);
 
 if($result){
-    echo"DELETED";
     header('Location:manage-area.php');
 }else{
     echo"ERROR!!";

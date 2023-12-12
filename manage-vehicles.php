@@ -8,6 +8,7 @@
 	} else {
 
 	if(isset($_POST['submit-vehicle'])) {
+		$area=$_POST['area'];
 		$slotid=$_POST['slotnum'];
 		$catename=$_POST['catename'];
 		$vehcomp=$_POST['vehcomp'];
@@ -16,15 +17,40 @@
 		$ownercontno=$_POST['ownercontno'];
 		$enteringtime=$_POST['enteringtime'];
 			
-		$query=mysqli_query($con, "INSERT into vehicle_info(slotid,VehicleCategory,VehicleCompanyname,RegistrationNumber,OwnerName,OwnerContactNumber,ParkingCharge) value('$slotid','$catename','$vehcomp','$vehreno','$ownername','$ownercontno','25')");
+		$query=mysqli_query($con, "INSERT into vehicle_info(area,slotid,VehicleCategory,VehicleCompanyname,RegistrationNumber,OwnerName,OwnerContactNumber,ParkingCharge) value('$area','$slotid','$catename','$vehcomp','$vehreno','$ownername','$ownercontno','25')");
 		if ($query) {
+			include('phpqrcode/qrlib.php');
+			$qrCodeImagePath = 'qrcodes/' . $areaCode . '.png';
+		
+			$tempDir = "qrcodes/";
+			
+			$codeContents = "VEHICLE INFO\nName: $ownername\nVehicle Number: $vehreno\nPark Area: $area\nSlot Number: $slotid";
+			
+			// we need to generate filename somehow, 
+			// with md5 or with database ID used to obtains $codeContents...
+			$fileName = $ownername.'.png';
+			
+			$pngAbsoluteFilePath = $tempDir.$fileName;
+			$urlRelativeFilePath = $tempDir.$fileName;
+			
+			// generating
+			if (!file_exists($pngAbsoluteFilePath)) {
+				QRcode::png($codeContents, $pngAbsoluteFilePath);
+				echo 'File generated!';
+				echo '<hr />';
+			} else {
+				echo 'File already generated! We can use this cached file to speed up site on common codes!';
+				echo '<hr />';
+			}
+
 			mysqli_query($con,"UPDATE slotinfo SET status='reserved' where slotid='$slotid'");
 			echo "<script>alert('Vehicle Entry Detail has been added');</script>";
-			// echo "<script>window.location.href ='payment.php? paidid=$ownername'</script>";
-			echo "<script>window.location.href = 'payment.php?paidid=" . urlencode($ownername) . "'</script>";
+			echo "<script>window.location.href ='payment.php'</script>";
+			
 		} else {
 			echo "<script>alert('Something Went Wrong');</script>";       
 		}
+
 	}
   ?>
 
@@ -38,6 +64,7 @@
 	<link href="css/font-awesome.min.css" rel="stylesheet">
 	<link href="css/datepicker3.css" rel="stylesheet">
 	<link href="css/styles.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	
 	<!--Custom Font-->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -72,11 +99,10 @@
 					<div class="panel-body">
 
 						<div class="col-md-12">
-
 							<form method="POST">
 								<div class="form-group">
 									<label>Area</label>
-									<select class="form-control" name="catename" id="catename">
+									<select class="form-control" name="area" id="catename">
 									<?php $query=mysqli_query($con,"select * from slotinfo where slotid='$entryid'");
 									if(!empty($_GET['entryid'])){
 										$row=mysqli_fetch_array($query);
@@ -115,7 +141,7 @@
 								</div>
 								<div class="form-group">
 									<label>Registration Number</label>
-									<input type="text" class="form-control" placeholder="LOL-1869" id="vehreno" name="vehreno" required>
+									<input type="text" class="form-control" placeholder="LOL-1869" id="vehreno" name="vehreno">
 								</div>
 
 
@@ -149,14 +175,14 @@
 									<label>Owner's Contact</label>
 									<input type="text" class="form-control" placeholder="Enter Here.." maxlength="10" pattern="[0-9]+" id="ownercontno" name="ownercontno" required>
 								</div>
-								<div class="form-group">
+								<!-- <div class="form-group">
 									<label>Payment</label>
 									<select name="payment" id="" class="form-control">
 										<option>--Select Payment--</option>
 										<option value="Manual">Manual Payment</option>
 										<option value="G-Cash">G-Cash</option>
 									</select>
-								</div>
+								</div> -->
 
 									<button type="submit" class="btn btn-success" name="submit-vehicle">Submit</button>
 									<button type="reset" class="btn btn-default">Reset</button>
@@ -164,8 +190,48 @@
 							</form>
 						</div> 
 					</div>
-        <?php include 'includes/footer.php'?>
+        <?php 
+		// echo "
+		// <script>
+		// 	Swal.fire({
+		// 		title: 'QR Code Generated!',
+		// 		imageUrl: '$urlRelativeFilePath/',
+		// 		imageWidth: 200,
+		// 		imageHeight: 200,
+		// 		imageAlt: 'QR Code',
+		// 		showCancelButton: true,
+		// 		confirmButtonColor: '#3085d6',
+		// 		cancelButtonColor: '#d33',
+		// 		confirmButtonText: 'Download QR Code'
+		// 	}).then((result) => {
+		// 		if (result.isConfirmed) {
+		// 			// Trigger download
+		// 			var a = document.createElement('a');
+		// 			a.href = '$filename';
+		// 			a.download = 'qrcode.png';
+		// 			a.click();
+		// 		}
+		// 	});
+		// </script>";
+		?>
 	</div>	<!--/.main-->
+	<script>
+		function downloadQR(qrCodeImagePath) {
+			Swal.fire({
+				title: 'QR Code Generated!',
+				text: 'Click the button to download the QR code.',
+				icon: 'success',
+				showCancelButton: true,
+				confirmButtonText: 'Download',
+				cancelButtonText: 'Close',
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// Redirect to the download_image.php script to download the QR code image
+					window.location.href = 'download_image.php?imagePath=' + qrCodeImagePath;
+				}
+			});
+		}
+	</script>
 	
 	<script src="js/jquery-1.11.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -189,5 +255,7 @@
 		
 </body>
 </html>
+
+
 
 <?php }  ?>

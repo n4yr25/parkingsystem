@@ -82,6 +82,8 @@
                                     
                                 </div>
                                     <center><button type="submit" class="btn btn-primary" name="submit">Generate Report</button></center>
+									<br>
+                                    <center><button type="submit" class="btn btn-primary" name="submit">Print <i class="fa fa-print fa-1x" aria-hidden="true" OnClick="CallPrint(this.value)"  ></i></button></center>
                         
                         </form>
 					</div>

@@ -111,7 +111,7 @@
 
                                 <div class="form-group">
 									<label>Parking Number</label>
-									<input type="text" class="form-control" value="<?php  echo $row['ParkingNumber'];?>" id="sdesc" name="sdesc" readonly>
+									<input type="text" class="form-control" value="<?php  echo $row['slotid'];?>" id="sdesc" name="sdesc" readonly>
 								</div>
 
 
