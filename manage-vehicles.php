@@ -2,12 +2,13 @@
 	session_start();
 	error_reporting(0);
 	include('includes/dbconn.php');
+	$entryid = $_GET['entryid'];
 	if (strlen($_SESSION['vpmsaid']==0)) {
 	header('location:logout.php');
 	} else {
 
 	if(isset($_POST['submit-vehicle'])) {
-		$parkingnumber=mt_rand(10000, 99999);
+		$slotid=$_POST['slotnum'];
 		$catename=$_POST['catename'];
 		$vehcomp=$_POST['vehcomp'];
 		$vehreno=$_POST['vehreno'];
@@ -15,10 +16,12 @@
 		$ownercontno=$_POST['ownercontno'];
 		$enteringtime=$_POST['enteringtime'];
 			
-		$query=mysqli_query($con, "INSERT into vehicle_info(ParkingNumber,VehicleCategory,VehicleCompanyname,RegistrationNumber,OwnerName,OwnerContactNumber) value('$parkingnumber','$catename','$vehcomp','$vehreno','$ownername','$ownercontno')");
+		$query=mysqli_query($con, "INSERT into vehicle_info(slotid,VehicleCategory,VehicleCompanyname,RegistrationNumber,OwnerName,OwnerContactNumber,ParkingCharge) value('$slotid','$catename','$vehcomp','$vehreno','$ownername','$ownercontno','25')");
 		if ($query) {
+			mysqli_query($con,"UPDATE slotinfo SET status='reserved' where slotid='$slotid'");
 			echo "<script>alert('Vehicle Entry Detail has been added');</script>";
-			echo "<script>window.location.href ='dashboard.php'</script>";
+			// echo "<script>window.location.href ='payment.php? paidid=$ownername'</script>";
+			echo "<script>window.location.href = 'payment.php?paidid=" . urlencode($ownername) . "'</script>";
 		} else {
 			echo "<script>alert('Something Went Wrong');</script>";       
 		}
@@ -74,25 +77,40 @@
 								<div class="form-group">
 									<label>Area</label>
 									<select class="form-control" name="catename" id="catename">
-									<option value="0">Select Area</option>
-									<?php $query=mysqli_query($con,"select * from parkarea");
+									<?php $query=mysqli_query($con,"select * from slotinfo where slotid='$entryid'");
+									if(!empty($_GET['entryid'])){
+										$row=mysqli_fetch_array($query);
+										if($row>0){
+									?>
+                                    <option value="<?php echo $row['areaName'];?>"><?php echo $row['areaName'];?></option>
+									<?php
+										}
+									}
+									else {
+										$query=mysqli_query($con,"select * from parkarea");
+										echo "<option value='0'>Select Area</option>";
 										while($row=mysqli_fetch_array($query))
 										{
-										?>    
+									?>    
                                     <option value="<?php echo $row['areaCode'];?>"><?php echo $row['areaCode'];?></option>
-                  					<?php } ?> 
+                  					<?php } } ?> 
 									</select>
 								</div>
+
 								<div class="form-group">
 									<label>Slot Number</label>
-									<select class="form-control" name="catename" id="catename">
-									<option value="0">Select Slot</option>
-									<?php $query=mysqli_query($con,"select * from slotinfo");
+									<select class="form-control" name="slotnum" id="slotnum">
+									<?php $query=mysqli_query($con,"select * from slotinfo where status='available'");
+									if(!empty($_GET['entryid'])){
+										echo "<option value='$entryid'>$entryid</option>";
+									}
+									else {
+										echo "<option value='0'>Select Slot</option>";
 										while($row=mysqli_fetch_array($query))
 										{
 										?>    
-                                    <option value="<?php echo $row['areaCode'];?>"><?php echo $row['areaCode'];?></option>
-                  					<?php } ?> 
+                                    <option value="<?php echo $row['slotid'];?>"><?php echo $row['slotid'];?></option>
+                  					<?php } } ?> 
 									</select>
 								</div>
 								<div class="form-group">

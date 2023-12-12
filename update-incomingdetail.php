@@ -11,7 +11,7 @@
         $cid=$_GET['updateid'];
         $remark=$_POST['remark'];
         $status=$_POST['status'];
-        $parkingcharge=$_POST['parkingcharge'];
+        $parkingcharge=25;
     
         $query=mysqli_query($con, "UPDATE vehicle_info set Remark='$remark',Status='$status',ParkingCharge='$parkingcharge' where ID='$cid'");
         if ($query) {
@@ -111,7 +111,7 @@
 
                                 <div class="form-group">
 									<label>Parking Number</label>
-									<input type="text" class="form-control" value="<?php  echo $row['ParkingNumber'];?>" id="sdesc" name="sdesc" readonly>
+									<input type="text" class="form-control" value="<?php  echo $row['slotid'];?>" id="sdesc" name="sdesc" readonly>
 								</div>
 
 
@@ -141,7 +141,7 @@
 
                                 <div class="form-group">
 									<label>Total Charge</label>
-									<input type="number" class="form-control" placeholder="" id="parkingcharge" name="parkingcharge" required>
+									<input type="number" class="form-control" placeholder="" id="parkingcharge" name="parkingcharge" value="<?php  echo $row['ParkingCharge'];?>"required>
 								</div>
 
 

@@ -89,7 +89,7 @@
         <td><?php  echo $row['OutTime'];?></td>
 
         <th>Total Charge</th>
-        <td><?php  echo "$ ", $row['ParkingCharge'];?></td>
+        <td><?php  echo "₱ ", $row['ParkingCharge'];?></td>
       </tr>
 
       <tr>

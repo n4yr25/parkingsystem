@@ -145,53 +145,28 @@ if (strlen($_SESSION['vpmsaid']==0)) {
 			
 		?>
 		<hr>
-		<center><h2>PARK AREA MAPPING</h2></center>
+		<div class="text-primary text-center font-weight-bold bg-success">
+			<h1>AVAILABLE PARK AREA</h1>
+		</div>
 		<div class="panel panel-container">
-				
+			<?php $query=mysqli_query($con,"select * from slotinfo where status='available'");
+				while($row=mysqli_fetch_array($query))
+				{
+			?>    
 			<div class="col-xs-6 col-md-3 col-lg-3 no-padding">
 				<div class="panel panel-orange panel-widget border-right">
 					<div class="row no-padding">
 						<div class="large">
-							<a href="manage-vehicles.php">
-								<img src="assets/icons/car_res.png" alt="" style="height: 140px; width: auto;">
+						<div class="text-secondary"><?php echo $row['areaName'];?></div>
+							<a href="manage-vehicles.php? entryid=<?php echo $row['slotid']; ?>">
+								<img src="assets/icons/car_ava.png" alt="" style="height: 140px; width: auto;">
 							</a>
 						</div>
-						<div class="text-muted">Slot 1</div>
+						<div class="text-secondary"><?php echo $row['slotid'];?></div>
 					</div>
 				</div>
 			</div>
-			<div class="col-xs-6 col-md-3 col-lg-3 no-padding">
-				<div class="panel panel-orange panel-widget border-right">
-					<div class="row no-padding">
-						<div class="large"><img src="assets/icons/car_res.png" alt="" style="height: 140px; width: auto;"></div>
-						<div class="text-muted">Slot 1</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-6 col-md-3 col-lg-3 no-padding">
-				<div class="panel panel-orange panel-widget border-right">
-					<div class="row no-padding">
-						<div class="large"><img src="assets/icons/car_res.png" alt="" style="height: 140px; width: auto;"></div>
-						<div class="text-muted">Slot 1</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-6 col-md-3 col-lg-3 no-padding">
-				<div class="panel panel-orange panel-widget border-right">
-					<div class="row no-padding">
-						<div class="large"><img src="assets/icons/car_ava.png" alt="" style="height: 140px; width: auto;"></div>
-						<div class="text-muted">Slot 1</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-6 col-md-3 col-lg-3 no-padding">
-				<div class="panel panel-orange panel-widget border-right">
-					<div class="row no-padding">
-						<div class="large"><img src="assets/icons/car_res.png" alt="" style="height: 140px; width: auto;"></div>
-						<div class="text-muted">Slot 1</div>
-					</div>
-				</div>
-			</div>
+			<?php } ?>
 		</div>
 	
 		

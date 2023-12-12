@@ -19,7 +19,7 @@
                     $slotid = 'SLOT' . str_pad($i, 3, '0', STR_PAD_LEFT); // Generates slotid like SLOT001, SLOT002, ..., SLOT010
         
                     // SQL query to insert a row into the slotinfo table
-                    $query = "INSERT INTO slotinfo (slotid, areaName) VALUES ('$slotid', '$areaCode')";
+                    $query = "INSERT INTO slotinfo (slotid, areaName, status) VALUES ('$slotid', '$areaCode', 'available')";
         
                     // Execute the query
                     $result = mysqli_query($con, $query);
