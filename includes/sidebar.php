@@ -46,7 +46,7 @@
             <li class="<?php if($page=="out-vehicle") {echo "active";}?>"><a href="out-vehicles.php"><em class="fa fa-toggle-off">&nbsp;</em> OUT Vehicles</a></li>
             <li class="<?php if($page=="manage-area") {echo "active";}?>"><a href="manage-area.php"><em class="fa fa-car">&nbsp;</em> Manage Park Area</a></li>
 			<li class="<?php if($page=="reports") {echo "active";}?>"><a href="reports.php"><em class="fa fa-file">&nbsp;</em> View Reports</a></li>
-			<!-- <li class="<?php if($page=="about") {echo "active";}?>"><a href="about.php"><em class="fa fa-info">&nbsp;</em> About Page</a></li> -->
+			<li class="<?php if($page=="scanner") {echo "active";}?>"><a href="scanner.php"><em class="fa fa-info">&nbsp;</em> QR Code Scanner</a></li>
 			<li class="<?php if($page=="income") {echo "active";}?>"><a href="total-income.php"><em class="fa fa-dollar">&nbsp;</em> Total Income</a></li>
 			<?php
 				}else if($user['AdminName'] == "Staff") {

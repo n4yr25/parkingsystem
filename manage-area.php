@@ -14,7 +14,7 @@
             $query = mysqli_query($con, "INSERT INTO parkarea(areaCode, areaDesc, areaSlots) VALUES ('$areaCode', '$areaDesc', '$areaSlot')");
             if ($query) {
                 echo "<script>alert('Park Area has been added!');</script>";
-				$qrCodeImagePath = 'qrcodes/' . $areaCode . '.png';
+				
         
                 for ($i = 1; $i <= $areaSlot; $i++) {
                     $slotid = 'SLOT' . str_pad($i, 3, '0', STR_PAD_LEFT); // Generates slotid like SLOT001, SLOT002, ..., SLOT010

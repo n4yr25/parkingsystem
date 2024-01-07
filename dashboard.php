@@ -43,12 +43,6 @@ if (strlen($_SESSION['vpmsaid']==0)) {
 			</ol>
 		</div><!--/.row-->
 		
-		<div class="row">
-			<div class="col-lg-12">
-				<h1 class="page-header"><?php include 'includes/greetings.php'?></h1>
-			</div>
-		</div><!--/.row-->
-		
 		<div class="panel panel-container">
 			<div class="row">
 				<div class="col-xs-6 col-md-3 col-lg-3 no-padding">
@@ -144,33 +138,55 @@ if (strlen($_SESSION['vpmsaid']==0)) {
 			$row7=mysqli_fetch_array($ret);
 			
 		?>
-		<hr>
 		<div class="text-primary text-center font-weight-bold bg-success">
 			<h1>AVAILABLE PARK AREA</h1>
 		</div>
 		<div class="panel panel-container">
-			<?php $query=mysqli_query($con,"select * from slotinfo where status='available'");
+			<div class="panel-container">
+				<div class="form-group">
+					<label>Select Parking Area</label>
+					<select class="form-control" name="catename" id="catename">
+						<?php $query=mysqli_query($con,"select * from parkarea");
+						while($row=mysqli_fetch_array($query))
+						{
+						?>    
+						<option value="<?php echo $row['areaCode'];?>"><?php echo $row['areaCode'];?></option>
+						<?php } ?> 
+					</select><br>
+					<center><button type="submit" class="btn btn-info" name="submit-vehicle">Submit</button></center>
+				</div>
+			</div>
+			<?php 
+			$query=mysqli_query($con,"select * from slotinfo ");
 				while($row=mysqli_fetch_array($query))
 				{
 			?>    
-			<div class="col-xs-6 col-md-3 col-lg-3 no-padding">
-				<div class="panel panel-orange panel-widget border-right">
-					<div class="row no-padding">
-						<div class="large">
-						<div class="text-secondary"><?php echo $row['areaName'];?></div>
+			<div class="parkmap col-xs-6 col-md-2 col-lg-2 no-padding">
+			<hr>
+                <div class="panel panel-orange panel-widget border-right border-top border-left">
+                    <div class="row no-padding">
+                        <div class="large">
+                            <div class="text-secondary"><h5><?php echo $row['areaName']; ?></h5></div>
+							<?php if($row['status'] == 'reserved') {
+							?>
 							<a href="manage-vehicles.php? entryid=<?php echo $row['slotid']; ?>">
-								<img src="assets/icons/car_ava.png" alt="" style="height: 140px; width: auto;">
-							</a>
-						</div>
-						<div class="text-secondary"><?php echo $row['slotid'];?></div>
-					</div>
-				</div>
-			</div>
+                                <img src="assets/icons/car_occ.png" alt="" style="height: 80px; width: auto;">
+                            </a> 
+							<?php
+							} else {
+							?>
+                            <a href="manage-vehicles.php? entryid=<?php echo $row['slotid']; ?>">
+                                <img src="assets/icons/car_ava.png" alt="" style="height: 80px; width: auto;">
+                            </a>
+							<?php } ?>
+                        </div>
+                        <div class="text-light"><h3 class="slottext"><?php echo $row['slotid']; ?></h3></div>
+                    </div>
+                </div>
+				<br><br><br>
+            </div>
 			<?php } ?>
 		</div>
-	
-		
-		
 	</div>	<!--/.main-->
 	
 	<script src="js/jquery-1.11.1.min.js"></script>
@@ -226,15 +242,7 @@ if (strlen($_SESSION['vpmsaid']==0)) {
 
 
 	};
-
-	
-
-	
-
-
 	</script>
-
-		
 </body>
 </html>
 

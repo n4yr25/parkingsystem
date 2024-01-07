@@ -1051,3 +1051,17 @@ p.back-link {
   display: grid;
   grid-template-columns: auto auto auto auto auto;
 }
+#preview{
+  width:1000px;
+  height: 500px;
+  margin:0px auto;
+}
+.parkmap {
+  padding: 20px;
+  background: url('/assets/background/bgparkmap.jpg');
+  background-color: grey;
+  margin-bottom: 10px;
+}
+.slottext {
+  color: white;
+}

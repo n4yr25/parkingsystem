@@ -88,12 +88,6 @@
 			</ol>
 		</div><!--/.row-->
 		
-		<div class="row">
-			<div class="col-lg-12">
-				<!-- <h1 class="page-header">Vehicle Management</h1> -->
-			</div>
-		</div><!--/.row-->
-		
 		<div class="panel panel-default">
 					<div class="panel-heading">Vehicle Entry</div>
 					<div class="panel-body">
