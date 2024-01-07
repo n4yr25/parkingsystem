@@ -43,7 +43,7 @@
 				echo '<hr />';
 			}
 
-			mysqli_query($con,"UPDATE slotinfo SET status='reserved' where slotid='$slotid'");
+			mysqli_query($con,"UPDATE slotinfo SET status='reserved' where slotid='$slotid' AND areaName='$area'");
 			echo "<script>alert('Vehicle Entry Detail has been added');</script>";
 			echo "<script>window.location.href ='payment.php'</script>";
 			

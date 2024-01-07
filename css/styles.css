@@ -1057,10 +1057,10 @@ p.back-link {
   margin:0px auto;
 }
 .parkmap {
-  padding: 20px;
+  padding: 15px;
+  padding-bottom: 120px;
   background: url('/assets/background/bgparkmap.jpg');
-  background-color: grey;
-  margin-bottom: 10px;
+  background-color: grey;margin-bottom: 10px;
 }
 .slottext {
   color: white;

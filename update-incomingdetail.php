@@ -13,7 +13,7 @@
         $status=$_POST['status'];
         $parkingcharge=25;
     
-        $query=mysqli_query($con, "UPDATE vehicle_info set Remark='$remark',Status='$status',ParkingCharge='$parkingcharge' where ID='$cid'");
+        $query=mysqli_query($con, "UPDATE vehicle_info set Remark='$remark',Status='$status',OutTime=NOW(), ParkingCharge='$parkingcharge' where ID='$cid'");
         if ($query) {
             $msg="All remarks has been updated.";
         } else {

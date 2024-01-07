@@ -18,7 +18,7 @@
     <link href="css/datatable.css" rel="stylesheet">
 	<link href="css/datepicker3.css" rel="stylesheet">
 	<link href="css/styles.css" rel="stylesheet">
-	
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<!--Custom Font-->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
@@ -51,6 +51,46 @@
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">Parking Reports</div>
+						<?php
+						
+						$query = "SELECT YEAR(InTime) AS Year, MONTH(InTime) AS Month,
+              SUM(CASE WHEN VehicleCategory = 'Bike' THEN 1 ELSE 0 END) AS BikeCount,
+              SUM(CASE WHEN VehicleCategory = 'Motor' THEN 1 ELSE 0 END) AS MotorCount,
+              SUM(CASE WHEN VehicleCategory = 'Car' THEN 1 ELSE 0 END) AS CarCount,
+              SUM(CASE WHEN VehicleCategory = 'E-bike' THEN 1 ELSE 0 END) AS EBikeCount
+              FROM vehicle_info 
+              GROUP BY YEAR(InTime), MONTH(InTime) 
+              ORDER BY YEAR(InTime), MONTH(InTime)";
+
+    $result = mysqli_query($con, $query);
+
+    $labels = [];
+    $bikeCounts = [];
+    $motorCounts = [];
+    $carCounts = [];
+    $eBikeCounts = [];
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $labels[] = $row['Year'] . '-' . $row['Month']; // Format: YYYY-MM
+        $bikeCounts[] = $row['BikeCount'];
+        $motorCounts[] = $row['MotorCount'];
+        $carCounts[] = $row['CarCount'];
+        $eBikeCounts[] = $row['EBikeCount'];
+    }
+
+    // Converting PHP arrays to JavaScript arrays
+    $labelsJSON = json_encode($labels);
+    $bikeCountsJSON = json_encode($bikeCounts);
+    $motorCountsJSON = json_encode($motorCounts);
+    $carCountsJSON = json_encode($carCounts);
+    $eBikeCountsJSON = json_encode($eBikeCounts);
+						?>
+						<div class="panel-body">
+							<center><h1>Parking Costumer's Graph</h1></center>
+							<div class="graph">
+								<canvas id="bar-chart" width="800" height="400"></canvas>
+							</div>
+						</div>
 
                         <form method="POST" enctype="multipart/form-data" name="datereports" action="generate-reports.php">
 
@@ -90,7 +130,58 @@
 				
 				
 </div><!--/.row-->
-		
+<script>
+    var labels = <?php echo $labelsJSON; ?>;
+    var bikeCounts = <?php echo $bikeCountsJSON; ?>;
+    var motorCounts = <?php echo $motorCountsJSON; ?>;
+    var carCounts = <?php echo $carCountsJSON; ?>;
+    var eBikeCounts = <?php echo $eBikeCountsJSON; ?>;
+
+    var ctx = document.getElementById('bar-chart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Bike',
+                    data: bikeCounts,
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Motor',
+                    data: motorCounts,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Car',
+                    data: carCounts,
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'E-bike',
+                    data: eBikeCounts,
+                    backgroundColor: 'rgba(255, 206, 86, 0.5)',
+                    borderColor: 'rgba(255, 206, 86, 1)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 		
 		
 

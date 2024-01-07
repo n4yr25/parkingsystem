@@ -95,7 +95,7 @@
 
                         <td><?php  echo $row['VehicleCategory'];?></td>
 
-                        <td><?php  echo 'CA-'.$row['ParkingNumber'];?></td>
+                        <td><?php  echo $row['area'];?></td>
 
                         <td><?php  echo $row['OwnerName'];?></td>
                         

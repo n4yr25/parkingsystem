@@ -144,48 +144,49 @@ if (strlen($_SESSION['vpmsaid']==0)) {
 		<div class="panel panel-container">
 			<div class="panel-container">
 				<div class="form-group">
-					<label>Select Parking Area</label>
-					<select class="form-control" name="catename" id="catename">
+					
 						<?php $query=mysqli_query($con,"select * from parkarea");
 						while($row=mysqli_fetch_array($query))
 						{
 						?>    
-						<option value="<?php echo $row['areaCode'];?>"><?php echo $row['areaCode'];?></option>
-						<?php } ?> 
-					</select><br>
-					<center><button type="submit" class="btn btn-info" name="submit-vehicle">Submit</button></center>
+						 
+					<!-- <center><button type="submit" class="btn btn-info" name="submit-vehicle">Submit</button></center> -->
+					<h1><?php echo "<center>".$row['areaCode']."</center>"; ?></h1>
 				</div>
 			</div>
 			<?php 
-			$query=mysqli_query($con,"select * from slotinfo ");
-				while($row=mysqli_fetch_array($query))
+			$sql = "select * from slotinfo where areaName='".$row['areaCode']."'";
+			$query2=mysqli_query($con,$sql);
+				while($data=mysqli_fetch_array($query2))
 				{
 			?>    
-			<div class="parkmap col-xs-6 col-md-2 col-lg-2 no-padding">
-			<hr>
+			<div class="col-xs-6 col-md-2 col-lg-2 no-padding parkmap">
                 <div class="panel panel-orange panel-widget border-right border-top border-left">
                     <div class="row no-padding">
                         <div class="large">
-                            <div class="text-secondary"><h5><?php echo $row['areaName']; ?></h5></div>
-							<?php if($row['status'] == 'reserved') {
+                            <div class="text-secondary"><h5><?php echo $data['areaName']; ?></h5></div>
+							<?php if($data['status'] == 'reserved') {
 							?>
-							<a href="manage-vehicles.php? entryid=<?php echo $row['slotid']; ?>">
+							<a href="manage-vehicles.php? entryid=<?php echo $data['slotid']; ?>">
                                 <img src="assets/icons/car_occ.png" alt="" style="height: 80px; width: auto;">
                             </a> 
 							<?php
 							} else {
 							?>
-                            <a href="manage-vehicles.php? entryid=<?php echo $row['slotid']; ?>">
+                            <a href="manage-vehicles.php? entryid=<?php echo $data['slotid']; ?>">
                                 <img src="assets/icons/car_ava.png" alt="" style="height: 80px; width: auto;">
                             </a>
 							<?php } ?>
                         </div>
-                        <div class="text-light"><h3 class="slottext"><?php echo $row['slotid']; ?></h3></div>
+                        <div class="text-light"><h3 class="slottext"><?php echo $data['slotid']; ?></h3></div>
                     </div>
                 </div>
-				<br><br><br>
             </div>
-			<?php } ?>
+			<?php } 
+			?>
+			<?php	
+			}
+			?>
 		</div>
 	</div>	<!--/.main-->
 	

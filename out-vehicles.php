@@ -63,6 +63,7 @@
                 <th>Parking Number</th>
 				<th>Charge</th>
                 <th>Vehicle's Owner</th>
+                <th>Time Out</th>
                 <th></th>
 
             </tr>
@@ -91,6 +92,7 @@
 			<td><?php  echo '₱'.$row['ParkingCharge'];?></td>
 
             <td><?php  echo $row['OwnerName'];?></td>
+            <td><?php  echo $row['OutTime'];?></td>
             
             <td><a href="outgoing-detail.php?updateid=<?php echo $row['ID'];?>"><button type="button" class="btn btn-sm btn-info">View Details</button></a>
             <a href="print-receipt.php?vid=<?php echo $row['ID'];?>"><button type="button" class="btn btn-sm btn-warning"> <i class="fa fa-print"></i></button>

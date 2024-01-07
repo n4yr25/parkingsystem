@@ -63,6 +63,7 @@
                 <th>Parking Number</th>
                 <th>Vehicle's Owner</th>
                 <th>Charge</th>
+				<th>Time In</th>
                 <th></th>
 
             </tr>
@@ -90,6 +91,7 @@
             <td><?php  echo $row['OwnerName'];?></td>
 
             <td><?php  echo $row['ParkingCharge'];?></td>
+            <td><?php  echo $row['InTime'];?></td>
             
             <td><a href="update-incomingdetail.php?updateid=<?php echo $row['ID'];?>"><button type="button" class="btn btn-sm btn-danger">Take Action</button></a>
             </td>
